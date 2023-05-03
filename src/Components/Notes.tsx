@@ -8,6 +8,7 @@ type Props = {
     handleDelete:  (id: string) => void
 }
 
+
 const Notes = ({note, handleDelete}: Props) => {
   return (
     <div className='mb-3'>
