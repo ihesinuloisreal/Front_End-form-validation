@@ -4,14 +4,15 @@ import './App.css'
 import Header from './Components/Header';
 import { Container, Row, Col } from 'react-bootstrap'
 import NoteList from './Components/NoteList';
+import { CreateNote } from './Components/CreateNote';
 
 
 function App() {
   const [notes, setnotes] = useState<Note[]>([{
     id: (new Date).toString(),
-    title: "Lorem ipsum dolor sit amet",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae harum esse adipisci facere ipsam eveniet pariatur ut, odit aperiam tempore!",
-    color: "blue",
+    title: "Lorem ipsum ",
+    text: "Repudiandae harum esse adipisci facere ipsam eveniet pariatur ut, odit aperiam tempore!",
+    color: "#dfdfdf",
     date: (new Date).toString()
 
   }])
@@ -22,7 +23,12 @@ function App() {
       <Container className='mt-5'>
         <Row>
           <Col>
-            <NoteList notes = { notes }/>
+            <NoteList notes = { notes } setnotes = { setnotes }/>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <CreateNote notes = { notes } setnotes = { setnotes }/>
           </Col>
         </Row>
       </Container>
