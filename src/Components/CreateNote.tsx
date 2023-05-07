@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import { Form, Alert } from 'react-bootstrap'
 import { Note } from '../Models/NoteModel'
+import axios from 'axios'
 
 type Props = {
     notes: Note[],
@@ -20,6 +21,13 @@ export const CreateNote = ({notes, setnotes}: Props) => {
             return setError("All fields are required")
         }
         setError("");
+        axios.get('http://localhost:8080/user')
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
         setnotes([...notes, {
             id: (new Date()).toString(),
             title: (titleRef.current as HTMLInputElement).value,
