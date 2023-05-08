@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import { Form, Alert } from 'react-bootstrap'
 import { Note } from '../Models/NoteModel'
-import Axios from 'axios'
+import axios from 'axios'
 
 type Props = {
     notes: Note[],
@@ -14,23 +14,35 @@ export const CreateNote = ({notes, setnotes}: Props) => {
     const titleRef = useRef<HTMLInputElement | null>(null);
     const textRef = useRef<HTMLTextAreaElement | null>(null);
     const ColorRef = useRef<HTMLInputElement | null>(null);
+    const [data, setdata] = useState<string>("");
+    const [post, setpost] = useState({
+        title: "",
+        text: "",
+        color: "",
+        date: "",
+
+    });
+
 
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>): void =>{
         e.preventDefault();
+        axios.post('http://localhost:8080/post',{
+            title: (titleRef.current as HTMLInputElement).value,
+            text: (textRef.current as HTMLTextAreaElement).value,
+            color: (ColorRef.current as HTMLInputElement).value,
+            date: (new Date()).toString()
+            
+        })
+        .then(res => {
+            console.log(res)
+            // console.log("Successful")
+        });
         if (titleRef.current?.value === "" || textRef.current?.value === "") {
             return setError("All fields are required")
         }
 
         setError("");
-
-        const getData = async() => {
-            const responce = await Axios.get('http://localhost:8080/user');
-            console.log(responce.data);
-        }
-
-        useEffect(() => {
-            getData()
-        },[]);
+        
         setnotes([...notes, {
             id: (new Date()).toString(),
             title: (titleRef.current as HTMLInputElement).value,
@@ -41,8 +53,17 @@ export const CreateNote = ({notes, setnotes}: Props) => {
         (titleRef.current as HTMLInputElement).value = "";
         (textRef.current as HTMLTextAreaElement).value = "";
     }
+    // useEffect(() => {
+    //     axios.get('http://localhost:8080')
+    //     .then((response) => {
+    //         setdata(response.data);
+    //         console.log(response)
+
+    //     });
+    // },[]);
   return (
     <div>
+        <div>{data}</div>
         <h2>Create Note</h2>
         <Form className='mt-3 mb-3' onSubmit={(e) => handleSubmit(e)}>
             {error && <Alert variant='danger'>{error}</Alert>}
