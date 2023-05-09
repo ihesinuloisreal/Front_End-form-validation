@@ -34,8 +34,8 @@ export const CreateNote = ({notes, setnotes}: Props) => {
             
         })
         .then(res => {
-            console.log(res)
-            // console.log("Successful")
+            // console.log(res)
+            console.log("Successful")
         });
         if (titleRef.current?.value === "" || textRef.current?.value === "") {
             return setError("All fields are required")
@@ -61,6 +61,9 @@ export const CreateNote = ({notes, setnotes}: Props) => {
 
     //     });
     // },[]);
+    const handleInput = (e) => {
+        setpost({...post, [e.target.value]})
+    }
   return (
     <div>
         <div>{data}</div>
@@ -69,15 +72,15 @@ export const CreateNote = ({notes, setnotes}: Props) => {
             {error && <Alert variant='danger'>{error}</Alert>}
             <Form.Group className='mb-3' controlId='formBasicTitle'>
                 <Form.Label>Title</Form.Label>
-                <Form.Control type='text' placeholder='Enter title for the note' ref={ titleRef }/>
+                <Form.Control type='text' placeholder='Enter title for the note' onChange={handleInput} ref={ titleRef }/>
             </Form.Group>
             <Form.Group className='mb-3' controlId='formBasicText'>
                 <Form.Label>Text</Form.Label>
-                <Form.Control placeholder='Enter Your note' as="textarea" rows={3} ref={ textRef }/>
+                <Form.Control placeholder='Enter Your note' as="textarea" rows={3} onChange={handleInput} ref={ textRef }/>
             </Form.Group>
             <Form.Group className='mb-3'>
                 <Form.Label htmlFor='colorInput'>Notes color</Form.Label>
-                <Form.Control type='color' id='colorInput' defaultValue="#dfdfdf" title='Choose your color' ref={ColorRef} />
+                <Form.Control type='color' id='colorInput' defaultValue="#dfdfdf" title='Choose your color' onChange={handleInput} ref={ColorRef} />
             </Form.Group>
             <Button type="submit" variant='primary'> Submit</Button>
         </Form>
