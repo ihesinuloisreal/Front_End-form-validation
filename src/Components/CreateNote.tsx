@@ -9,7 +9,6 @@ interface FormValues {
     // setnotes: React.Dispatch<React.SetStateAction<Note[]>>,
     title: string;
     text: string;
-    color: string;
 }
 
 export const CreateNote = () => {
@@ -20,26 +19,34 @@ export const CreateNote = () => {
     const [data, setdata] = useState<string>("");
     const [formValues, setFormValues] = useState<FormValues>({
         title: "",
-        text: "",
-        color: ""
+        text: ""
 
     });
+    const [color, setColor] = useState("#dfdfdf")
     const [error, setError] = useState<Partial<FormValues>>({});
+
+    const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setColor(e.target.value);
+    }
 
     // Handle form input
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {title, text} = e.target;
-        setFormValues((prevValues) => ({...prevValues, [title]: value }));
+        const {name, value} = e.target;
+        setFormValues((prevValues) => ({...prevValues, [name]: value }));
     };
     // Handle form submission
     const handleSubmit = async (e:FormEvent) =>{
         e.preventDefault();
         if (validateForm()) {
             try {
+                
                 const response = await axios.post('http://localhost:8080/send',formValues);
                 console.log("Note Entered:", response.data);
                 // Clear form input
-                // setFormValues({""});
+                setFormValues({
+                    title: "",
+                    text: ""
+                });
             } catch (error) {
                 console.error("Failed to create: ", error);
             }
@@ -91,7 +98,7 @@ export const CreateNote = () => {
             </Form.Group>
             <Form.Group className='mb-3'>
                 <Form.Label htmlFor='colorInput'>Notes color</Form.Label>
-                <Form.Control type='color' id='colorInput' defaultValue="#dfdfdf" title='Choose your color' name='color' onChange={handleInputChange} />
+                <Form.Control type='color' id='colorInput' value={color} title='Choose your color' name='color' onChange={handleColorChange} />
             </Form.Group>
             <Button type="submit" variant='primary'> Submit</Button>
         </Form>
