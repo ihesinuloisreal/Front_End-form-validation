@@ -9,6 +9,7 @@ interface FormValues {
     // setnotes: React.Dispatch<React.SetStateAction<Note[]>>,
     title: string;
     text: string;
+    color: string;
 }
 
 export const CreateNote = () => {
@@ -16,18 +17,17 @@ export const CreateNote = () => {
     // const titleRef = useRef<HTMLInputElement | null>(null);
     // const textRef = useRef<HTMLTextAreaElement | null>(null);
     // const ColorRef = useRef<HTMLInputElement | null>(null);
-    const [data, setdata] = useState<string>("");
     const [formValues, setFormValues] = useState<FormValues>({
         title: "",
-        text: ""
-
+        text: "",
+        color: "#dfdfdf"
     });
-    const [color, setColor] = useState("#dfdfdf")
+    // const [color, setColor] = useState("#dfdfdf")
     const [error, setError] = useState<Partial<FormValues>>({});
 
-    const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setColor(e.target.value);
-    }
+    // const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     setColor(e.target.value);
+    // }
 
     // Handle form input
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +37,7 @@ export const CreateNote = () => {
     // Handle form submission
     const handleSubmit = async (e:FormEvent) =>{
         e.preventDefault();
+        // console.log(formValues)
         if (validateForm()) {
             try {
                 
@@ -45,7 +46,8 @@ export const CreateNote = () => {
                 // Clear form input
                 setFormValues({
                     title: "",
-                    text: ""
+                    text: "",
+                    color: ""
                 });
             } catch (error) {
                 console.error("Failed to create: ", error);
@@ -65,25 +67,15 @@ export const CreateNote = () => {
             newError.title = 'Title Required'
         } else if (!formValues.text) {
             newError.text = 'Text Required'
-        } 
+        } else if (!formValues.color){
+            newError.text = 'color Required'
+        }
         setError(newError);
         return Object.keys(newError).length === 0;
     };
-    // useEffect(() => {
-    //     axios.get('http://localhost:8080')
-    //     .then((response) => {
-    //         setdata(response.data);
-    //         console.log(response)
-
-    //     });
-    // },[]);
-    // const handleInput = (e: { target: { value: any } }) => {
-
-    // };
-
+    
   return (
     <div>
-        <div>{data}</div>
         <h2>Create Note</h2>
         <Form className='mt-3 mb-3' onSubmit={handleSubmit}>
             <Form.Group className='mb-3' controlId='formBasicTitle'>
@@ -98,7 +90,7 @@ export const CreateNote = () => {
             </Form.Group>
             <Form.Group className='mb-3'>
                 <Form.Label htmlFor='colorInput'>Notes color</Form.Label>
-                <Form.Control type='color' id='colorInput' value={color} title='Choose your color' name='color' onChange={handleColorChange} />
+                <Form.Control type='color' id='colorInput' value={formValues.color} title='Choose your color' name='color' onChange={handleInputChange} />
             </Form.Group>
             <Button type="submit" variant='primary'> Submit</Button>
         </Form>
