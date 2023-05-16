@@ -23,7 +23,7 @@ function App() {
       <Container className='mt-5'>
         <Row>
           <Col>
-            <NoteList notes = { notes } setnotes = { setnotes }/>
+            <NoteList />
           </Col>
         </Row>
         <Row>

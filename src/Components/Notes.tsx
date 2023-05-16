@@ -4,7 +4,7 @@ import { Card } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button'
 
 type Props = {
-    note: Note,
+    note: NotesProps[],
     handleDelete:  (id: string) => void
 }
 

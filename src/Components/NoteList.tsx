@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import Notes from './Notes'
 import { Note } from '../Models/NoteModel'
 import axios from 'axios'
 
 
-type NotesProps = {
-    notes: Note[],
-    setnotes: React.Dispatch<React.SetStateAction<Note[]>>
-}
+interface NotesProps { id: any; title?: string; text?: string; color?: string; date?: string; data: string}
 
-const NoteList = ({notes, setnotes}: NotesProps) => {
-    const [data, setdata] = useState<string>("");
+const NoteList = (): JSX.Element => {
+    const [data, setdata] = useState<NotesProps[] | null >(null );
   useEffect(() => {
     const fetch = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/note');
+        const response = await axios.get<NotesProps[]>('http://localhost:8080/note');
         setdata(response.data);
         // console.log(data)
       } catch (error) {
@@ -24,17 +21,17 @@ const NoteList = ({notes, setnotes}: NotesProps) => {
     fetch();
   },[]);
     const handleDelete = (id:string) =>{
-        setnotes(notes.filter(note => note.id !== id))
+        // setnotes(notes.filter(note => note.id !== id))
     }
-    const renderNote = ():JSX.Element[] => {
-        return notes.map(note => {
-            return <Notes key={note.id} note={note} handleDelete = {handleDelete}/>
-        })
-    }
+    // const renderNote = ():JSX.Element[] => {
+        
+    // }
   return (
     <>
         <h2 className='mt-3'>Notes</h2>
-        <div>{ renderNote()}</div>
+        <div>{data ? data.map((data: NotesProps) => {
+            return <Notes key={data.id} note={data} handleDelete = {handleDelete}/>
+        }): ""}</div>
     </>
   )
 }
