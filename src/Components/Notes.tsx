@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { Note } from '../Models/NoteModel'
+import React, { ReactNode, useEffect, useState } from 'react'
+// import { Note } from '../Models/NoteModel'
 import { Card } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button'
 
-type Props = {
-    note: NotesProps[],
+interface Props {
+    note: NoteProps[];
     handleDelete:  (id: string) => void
 }
 
