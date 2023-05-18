@@ -4,14 +4,14 @@ import { Card } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button'
 
 interface Props {
-    note: NoteProps[];
+    note: NoteProps;
     handleDelete:  (id: string) => void
 }
 
 
 
 
-const Notes = ({note, handleDelete}: Props) => {
+const Notes: React.FC<Props> = ({note, handleDelete}) => {
   
   return (
     <div className='mb-3'>
@@ -20,7 +20,7 @@ const Notes = ({note, handleDelete}: Props) => {
                 <Card.Title>{note.title}</Card.Title>
                 <Card.Text>{note.text}</Card.Text>
                 <Card.Subtitle className='text-muted'>{note.date}</Card.Subtitle >
-                <Button className='mt-3' variant='danger' onClick={ () => handleDelete(note.id)}>Delete</Button>
+                <Button className='mt-3' variant='danger' onClick={ () => handleDelete(note._id)}>Delete</Button>
             </Card.Body>
         </Card>
     </div>
