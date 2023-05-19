@@ -5,32 +5,34 @@ import Header from './Components/Header';
 import { Container, Row, Col } from 'react-bootstrap'
 import NoteList from './Components/NoteList';
 import { CreateNote } from './Components/CreateNote';
+import { Button } from 'react-bootstrap';
+
 
 
 function App() {
-  // const [notes, setnotes] = useState<Note[]>([{
-  //   id: (new Date).toString(),
-  //   title: "Lorem ipsum ",
-  //   text: "Repudiandae harum esse adipisci facere ipsam eveniet pariatur ut, odit aperiam tempore!",
-  //   color: "#dfdfdf",
-  //   date: (new Date).toString()
+  const [visibility, setVisibility] = useState<boolean>(true);
 
-  // }])
+  const visible = (): boolean => {
+    setVisibility(!visibility)
+  }
 
   return (
     <>
       <Header/>
+      
       <Container className='mt-5'>
-        <Row>
+      <div className='row mt-3 mb-3'><h2 className='mt-3'>{visibility ? "Notes" : "Add Note"}</h2> <Button type="submit" variant='secondary' onClick={visible}> {visibility ? "Add Note" : "View List"}</Button> </div>
+          {visibility ? <Row>
           <Col>
             <NoteList/>
           </Col>
-        </Row>
-        <Row>
+        </Row> : <Row>
           <Col>
             <CreateNote />
           </Col>
-        </Row>
+        </Row>}
+        
+        
       </Container>
     </>
   )

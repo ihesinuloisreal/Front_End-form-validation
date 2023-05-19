@@ -5,7 +5,7 @@ import axios from 'axios'
 
 
 interface NoteProps { 
-    _id: number; 
+    _id: string; 
     title?: string; 
     text?: string; 
     color?: string; 
@@ -27,9 +27,10 @@ const NoteList = (): JSX.Element => {
         fetch();
     },[]);
     const handleDelete = async (id: string) =>{
+        setdata(data.filter(data => data._id !== id));
+
         try {
             const response = await axios.delete(`http://localhost:8080/delete/${id}`);
-            // setdata(response.data);
             console.log(id)
         } catch (error) {
             console.error(error)
@@ -41,7 +42,6 @@ const NoteList = (): JSX.Element => {
     // }
   return (
     <>
-        <h2 className='mt-3'>Notes</h2>
         {data ?(<div>{ data.map((data) => (
             <Notes key={data._id} note={data} handleDelete = {handleDelete}/>
         ))}</div>) : (<div>Loading.....</div>)}

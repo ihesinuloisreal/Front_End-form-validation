@@ -1,7 +1,6 @@
-import React, { FormEvent, useEffect, useRef, useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import { Form, Alert } from 'react-bootstrap'
-import { Note } from '../Models/NoteModel'
 import axios from 'axios'
 
 interface FormValues {
@@ -13,16 +12,11 @@ interface FormValues {
 }
 
 export const CreateNote = () => {
-    // const [error, setError] = useState<string>("");
-    // const titleRef = useRef<HTMLInputElement | null>(null);
-    // const textRef = useRef<HTMLTextAreaElement | null>(null);
-    // const ColorRef = useRef<HTMLInputElement | null>(null);
     const [formValues, setFormValues] = useState<FormValues>({
         title: "",
         text: "",
         color: "#dfdfdf"
     });
-    // const [color, setColor] = useState("#dfdfdf")
     const [error, setError] = useState<Partial<FormValues>>({});
 
     // const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +41,7 @@ export const CreateNote = () => {
                 setFormValues({
                     title: "",
                     text: "",
-                    color: ""
+                    color: "#dfdfdf"
                 });
             } catch (error) {
                 console.error("Failed to create: ", error);
