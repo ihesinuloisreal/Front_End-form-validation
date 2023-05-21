@@ -21,7 +21,7 @@ function App() {
       <Header/>
       
       <Container className='mt-5'>
-      <div className='row mt-3 mb-3'><h2 className='mt-3'>{visibility ? "Notes" : "Add Note"}</h2> <Button type="submit" variant='secondary' onClick={visible}> {visibility ? "Add Note" : "View List"}</Button> </div>
+      <div className='mt-3 mb-3'><h2 className='mt-3'>{visibility ? "Notes" : "Add Note"}</h2> <Button type="submit" variant='secondary' onClick={visible}> {visibility ? "Add Note" : "View List"}</Button> </div>
           {visibility ? <Row>
           <Col>
             <NoteList/>

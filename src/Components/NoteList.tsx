@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect, useState } from 'react'
 import Notes from './Notes'
 // import { Note} from '../Models/NoteModel'
 import axios from 'axios'
+import H1 from './H1';
 
 
 interface NoteProps { 
@@ -37,14 +38,14 @@ const NoteList = (): JSX.Element => {
         }
         // setnotes(notes.filter(note => note.id !== id))
     }
-    // const renderNote = ():JSX.Element[] => {
+    const handleEdit = async (id: string) => {
         
-    // }
+    }
   return (
     <>
-        {data ?(<div>{ data.map((data) => (
-            <Notes key={data._id} note={data} handleDelete = {handleDelete}/>
-        ))}</div>) : (<div>Loading.....</div>)}
+        { data ? ( <div>{ data.map((data) => (
+            <Notes key={data._id} note={data} handleDelete = {handleDelete} handleEdit = {handleEdit}/>
+        ))}</div> ) : <H1 text="No record found in the database"/> }
     </>
   )
 }
